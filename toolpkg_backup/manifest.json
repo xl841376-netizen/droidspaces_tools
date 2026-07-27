@@ -1,0 +1,45 @@
+{
+    "schema_version": 1,
+    "toolpkg_id": "droidspaces",
+    "version": "0.1.5",
+    "author": ["Operit Dev"],
+    "main": "main.js",
+    "display_name": {
+        "zh": "Droidspaces 容器管理器",
+        "en": "Droidspaces Container Manager"
+    },
+    "description": {
+        "zh": "基于 Droidspaces-OSS 的 Linux 容器管理工具包。提供完整的容器生命周期管理、交互式终端、系统检查与 Compose DSL 自定义仪表盘 UI。",
+        "en": "Linux container management toolkit based on Droidspaces-OSS. Provides full container lifecycle management, interactive terminal, system checks, and a Compose DSL custom dashboard UI."
+    },
+    "subpackages": [
+    {
+      "id": "droidspaces_tools",
+      "entry": "packages/droidspaces.js",
+      "enabled_by_default": true,
+      "display_name": {
+        "zh": "Droidspaces 容器管理",
+        "en": "Droidspaces Container Management"
+      },
+      "description": {
+        "zh": "容器生命周期管理和交互式终端",
+        "en": "Container lifecycle management and interactive terminal"
+      }
+    }
+  ],
+    "resources": [
+        {
+            "key": "droidspaces_dashboard",
+            "path": "ui/dashboard/index.ui.js",
+            "type": "ui",
+            "display_name": {
+                "zh": "Droidspaces 仪表盘",
+                "en": "Droidspaces Dashboard"
+            },
+            "description": {
+                "zh": "基于 Compose DSL 的容器管理仪表盘",
+                "en": "Compose DSL container management dashboard"
+            }
+        }
+    ]
+}
