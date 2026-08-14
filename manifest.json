@@ -1,7 +1,7 @@
 {
     "schema_version": 1,
     "toolpkg_id": "droidspaces",
-    "version": "0.2.1",
+    "version": "0.2.13",
     "author": [
         "Operit Dev"
     ],
@@ -11,8 +11,8 @@
         "en": "Droidspaces Container Manager"
     },
     "description": {
-        "zh": "Droidspaces 容器管理工具包。v0.2.1：修复 shell 非零退出码误报、send/read_screen 增量输出与有界窗口(200行)、read_screen 支持 offset 增量读取。",
-        "en": "Droidspaces container management toolkit. v0.2.1: fix shell non-zero exit misreport, incremental send/read_screen with bounded window (200 lines), read_screen offset support."
+        "zh": "Droidspaces 容器管理工具包。v0.2.13：修复 file-direct/code-autofile 命令构造漏 interp 默认值（sh 文件路径执行 Permission denied）的 bug。",
+        "en": "Droidspaces container management toolkit. v0.2.13: fixed missing interp default in file-direct/code-autofile command construction (sh file-path execution Permission denied)."
     },
     "subpackages": [
         {
