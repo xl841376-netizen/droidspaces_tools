@@ -13,27 +13,26 @@ METADATA
     "enabledByDefault": true,
     "category": "System",
     "tools": [
-        { "name": "enter", "description": { "zh": "【交互终端】在容器中创建交互式终端会话（自动安装 tmux）。自带功能：自动检测并安装 tmux 确保持久工作目录和 Shell 状态。返回 session_id 供后续 send/read_screen 使用。不是用来执行单次命令的——单次命令走 exec 或 exec_code。", "en": "[Interactive Terminal] Create interactive terminal session (auto-installs tmux). Built-in: auto-detects and installs tmux for persistent cwd & shell state.  NOT for one-shot commands — use exec/exec_code." }, "parameters": [ { "name": "name", "type": "string", "required": true, "description": "容器名称" }, { "name": "user", "type": "string", "required": false, "description": "可选，指定用户" }, { "name": "session_id", "type": "string", "required": false, "description": "可选，自定义会话 ID" }, { "name": "timeout_ms", "type": "string", "required": false, "description": "超时毫秒（默认15000）" } ] },
-        { "name": "send", "description": { "zh": "【终端发信】向已有交互式终端发送文本或控制键。只管发送不管读取。读取输出用 read_screen。不要用来替代 exec/exec_code 执行命令。", "en": "[Terminal Send] Send text/control to existing terminal. Send only. Use read_screen for output.  NOT for command execution — use exec/exec_code." }, "parameters": [ { "name": "session_id", "type": "string", "required": true, "description": "会话 ID" }, { "name": "input", "type": "string", "required": false, "description": "输入文本" }, { "name": "control", "type": "string", "required": false, "description": "控制键：enter/tab/esc/ctrl/ctrl_c/ctrl_d" } ] },
-        { "name": "read_screen", "description": { "zh": "【终端读取】读取交互式终端的可见屏幕内容。只读不写。需要执行命令用 exec/exec_code。", "en": "[Terminal Read] Read visible screen content from terminal. Read only.  Use exec/exec_code to run commands." }, "parameters": [ { "name": "session_id", "type": "string", "required": true, "description": "会话 ID" } ] },
-        { "name": "exec", "description": { "zh": "【快速命令】在容器中执行简单单条命令。只传命令，不做环境准备（不推脚本、不装 python3）。不要用来执行大段代码——会被截断。复杂脚本请用 exec_code（自动处理前置条件）。", "en": "[Quick Command] Execute one simple command in container. No env prep (no script push, no python3 install).  NOT for large code — will be truncated. Use exec_code for complex scripts." }, "parameters": [ { "name": "name", "type": "string", "required": true, "description": "容器名称" }, { "name": "command", "type": "string", "required": true, "description": "要执行的命令" }, { "name": "user", "type": "string", "required": false, "description": "可选，指定用户" }, { "name": "timeout_ms", "type": "string", "required": false, "description": "超时毫秒（默认30000）" } ] },
-        { "name": "start", "description": { "zh": "【启动容器】启动一个新 Droidspaces 容器。只启动不执行命令。启动后如需执行命令走 exec/exec_code。", "en": "[Start Container] Start a new Droidspaces container. Starts only. Use exec/exec_code to run commands." }, "parameters": [ { "name": "name", "type": "string", "required": true, "description": "容器名称" }, { "name": "rootfs", "type": "string", "required": false, "description": "rootfs 目录路径" }, { "name": "rootfs_img", "type": "string", "required": false, "description": "rootfs ext4 镜像路径" }, { "name": "hostname", "type": "string", "required": false, "description": "容器主机名" }, { "name": "conf", "type": "string", "required": false, "description": "配置文件路径" }, { "name": "net", "type": "string", "required": false, "description": "网络模式 host/nat/none" }, { "name": "volatile", "type": "boolean", "required": false, "description": "临时模式" }, { "name": "bind_mounts", "type": "string", "required": false, "description": "绑定挂载 src:dst" }, { "name": "port", "type": "string", "required": false, "description": "端口转发 HOST:CONT[/proto]" }, { "name": "extra_args", "type": "string", "required": false, "description": "额外参数如 --gpu" } ] },
-        { "name": "stop", "description": { "zh": "【停止容器】停止一个或多个容器。只停止不自动重启。", "en": "[Stop Container] Stop one or more containers. Stops only." }, "parameters": [ { "name": "names", "type": "string", "required": true, "description": "容器名逗号分隔" } ] },
-        { "name": "restart", "description": { "zh": "【重启容器】快速重启容器（保留 loop mount）。只重启不做额外操作。", "en": "[Restart Container] Fast restart (preserves loop mounts). Restarts only." }, "parameters": [ { "name": "name", "type": "string", "required": true, "description": "容器名称" } ] },
-        { "name": "list", "description": { "zh": "【列出容器】列出所有运行中的容器。只查询不修改。", "en": "[List Containers] List running containers. Read-only." }, "parameters": [ { "name": "timeout_ms", "type": "string", "required": false, "description": "超时毫秒（默认10000）" } ] },
-        { "name": "info", "description": { "zh": "【容器详情】查看容器详细技术信息。只读不写。", "en": "[Container Info] View container technical info. Read-only." }, "parameters": [ { "name": "name", "type": "string", "required": true, "description": "容器名称" }, { "name": "timeout_ms", "type": "string", "required": false, "description": "超时毫秒（默认10000）" } ] },
-        { "name": "scan", "description": { "zh": "【扫描容器】扫描并注册孤立容器。只扫描注册不执行命令。", "en": "[Scan Containers] Scan and register orphaned containers. Scan only." }, "parameters": [ { "name": "timeout_ms", "type": "string", "required": false, "description": "超时毫秒（默认15000）" } ] },
-        { "name": "check", "description": { "zh": "【环境检查】验证系统要求与内核配置。只检查不修改。", "en": "[Environment Check] Verify system requirements. Check only." }, "parameters": [ { "name": "timeout_ms", "type": "string", "required": false, "description": "超时毫秒（默认15000）" } ] },
-        { "name": "shell", "description": { "zh": "【宿主 Shell】在 Android 宿主上执行 Shell 命令（不是容器内！）。容器内执行命令请用 exec/exec_code。", "en": "[Host Shell] Execute command on Android HOST (NOT in container!).  Use exec/exec_code for container commands." }, "parameters": [ { "name": "command", "type": "string", "required": true, "description": "命令" }, { "name": "timeout_ms", "type": "string", "required": false, "description": "超时毫秒（默认15000）" } ] },
-        { "name": "ping", "description": { "zh": "【连通测试】测试工具能否返回值给 UI。纯测试不操作容器。", "en": "[Ping Test] Test if tool returns value to UI. Pure test." }, "parameters": [] },
-        { "name": "status", "description": { "zh": "【安装状态】获取 droidspaces 安装状态与容器列表。只读查询。", "en": "[Install Status] Get installation status and container list. Read-only." }, "parameters": [ { "name": "timeout_ms", "type": "string", "required": false, "description": "超时毫秒（默认10000）" } ] },
-        { "name": "open_dashboard", "description": { "zh": "【仪表盘】打开容器管理器仪表盘 UI。只打开界面不做后台操作。", "en": "[Dashboard] Open container manager dashboard UI. UI only." }, "parameters": [] },
-        { "name": "close", "description": { "zh": "【关闭终端】关闭交互式终端会话，清理 tmux 和临时文件。只清理不执行命令。", "en": "[Close Terminal] Close terminal session, cleanup tmux & temp files. Cleanup only." }, "parameters": [ { "name": "session_id", "type": "string", "required": true, "description": "会话 ID" } ] },
-        { "name": "exec_code", "description": { "zh": "【复杂代码执行】在容器中执行大段/复杂代码脚本。自带功能：自动推送 ct_socket_transfer.py（TCP 自收发用），自动安装 python3（容器内缺时自动装）。容量上限 60000 字节（超时阻断）。简单单条命令请用 exec——更快更轻量。", "en": "[Complex Code Execution] Execute large/complex code in container. Built-in: auto-pushes ct_socket_transfer.py, auto-installs python3 if missing. Capacity: 60000 bytes max.  Simple commands? Use exec — faster, lighter." }, "parameters": [ { "name": "name", "type": "string", "required": true, "description": "容器名称" }, { "name": "code", "type": "string", "required": true, "description": "要执行的代码/脚本内容" }, { "name": "interpreter", "type": "string", "required": false, "description": "解释器，默认 bash。可选 python3/perl/sh 等" }, { "name": "timeout_ms", "type": "string", "required": false, "description": "超时毫秒（默认60000）" } ] }
+        { "name": "enter", "description": { "zh": "【交互终端】在容器中创建交互式终端会话（自动安装 tmux）。⚡自带功能：自动检测并安装 tmux 确保持久工作目录和 Shell 状态。返回 session_id 供后续 send/read_screen 使用。❌不是用来执行单次命令的——单次命令走 exec_code。", "en": "[Interactive Terminal] Create interactive terminal session (auto-installs tmux). ⚡Built-in: auto-detects and installs tmux for persistent cwd & shell state. ❌ NOT for one-shot commands — use exec_code." }, "parameters": [ { "name": "name", "type": "string", "required": true, "description": "容器名称" }, { "name": "user", "type": "string", "required": false, "description": "可选，指定用户" }, { "name": "session_id", "type": "string", "required": false, "description": "可选，自定义会话 ID" }, { "name": "timeout_ms", "type": "string", "required": false, "description": "超时毫秒（默认15000）" } ] },
+        { "name": "send", "description": { "zh": "【终端发信】向已有交互式终端发送文本或控制键。⚡只管发送不管读取。读取输出用 read_screen。❌不要用来替代 exec_code 执行命令。", "en": "[Terminal Send] Send text/control to existing terminal. ⚡Send only. Use read_screen for output. ❌ NOT for command execution — use exec_code." }, "parameters": [ { "name": "session_id", "type": "string", "required": true, "description": "会话 ID" }, { "name": "input", "type": "string", "required": false, "description": "输入文本" }, { "name": "control", "type": "string", "required": false, "description": "控制键：enter/tab/esc/ctrl/ctrl_c/ctrl_d" } ] },
+        { "name": "read_screen", "description": { "zh": "【终端读取】读取交互式终端的可见屏幕内容。⚡只读不写。❌需要执行命令用 exec_code。", "en": "[Terminal Read] Read visible screen content from terminal. ⚡Read only. ❌ Use exec_code to run commands." }, "parameters": [ { "name": "session_id", "type": "string", "required": true, "description": "会话 ID" }, { "name": "offset", "type": "boolean", "required": false, "description": "可选，true=仅返回上次读取后的新增内容（增量读取）" } ] },        { "name": "start", "description": { "zh": "【启动容器】启动一个新 Droidspaces 容器。⚡只启动不执行命令。启动后如需执行命令走 exec_code。", "en": "[Start Container] Start a new Droidspaces container. ⚡Starts only. Use exec_code to run commands." }, "parameters": [ { "name": "name", "type": "string", "required": true, "description": "容器名称" }, { "name": "rootfs", "type": "string", "required": false, "description": "rootfs 目录路径" }, { "name": "rootfs_img", "type": "string", "required": false, "description": "rootfs ext4 镜像路径" }, { "name": "hostname", "type": "string", "required": false, "description": "容器主机名" }, { "name": "conf", "type": "string", "required": false, "description": "配置文件路径" }, { "name": "net", "type": "string", "required": false, "description": "网络模式 host/nat/none" }, { "name": "volatile", "type": "boolean", "required": false, "description": "临时模式" }, { "name": "bind_mounts", "type": "string", "required": false, "description": "绑定挂载 src:dst" }, { "name": "port", "type": "string", "required": false, "description": "端口转发 HOST:CONT[/proto]" }, { "name": "extra_args", "type": "string", "required": false, "description": "额外参数如 --gpu" } ] },
+        { "name": "stop", "description": { "zh": "【停止容器】停止一个或多个容器。⚡只停止不自动重启。", "en": "[Stop Container] Stop one or more containers. ⚡Stops only." }, "parameters": [ { "name": "names", "type": "string", "required": true, "description": "容器名逗号分隔" } ] },
+        { "name": "restart", "description": { "zh": "【重启容器】快速重启容器（保留 loop mount）。⚡只重启不做额外操作。", "en": "[Restart Container] Fast restart (preserves loop mounts). ⚡Restarts only." }, "parameters": [ { "name": "name", "type": "string", "required": true, "description": "容器名称" } ] },
+        { "name": "list", "description": { "zh": "【列出容器】列出所有运行中的容器。⚡只查询不修改。", "en": "[List Containers] List running containers. ⚡Read-only." }, "parameters": [ { "name": "timeout_ms", "type": "string", "required": false, "description": "超时毫秒（默认10000）" } ] },
+        { "name": "info", "description": { "zh": "【容器详情】查看容器详细技术信息。⚡只读不写。", "en": "[Container Info] View container technical info. ⚡Read-only." }, "parameters": [ { "name": "name", "type": "string", "required": true, "description": "容器名称" }, { "name": "timeout_ms", "type": "string", "required": false, "description": "超时毫秒（默认10000）" } ] },
+        { "name": "scan", "description": { "zh": "【扫描容器】扫描并注册孤立容器。⚡只扫描注册不执行命令。", "en": "[Scan Containers] Scan and register orphaned containers. ⚡Scan only." }, "parameters": [ { "name": "timeout_ms", "type": "string", "required": false, "description": "超时毫秒（默认15000）" } ] },
+        { "name": "check", "description": { "zh": "【环境检查】验证系统要求与内核配置。⚡只检查不修改。", "en": "[Environment Check] Verify system requirements. ⚡Check only." }, "parameters": [ { "name": "timeout_ms", "type": "string", "required": false, "description": "超时毫秒（默认15000）" } ] },
+        { "name": "shell", "description": { "zh": "【宿主 Shell】在 Android 宿主上执行 Shell 命令（不是容器内！）。❌容器内执行命令请用 exec_code。", "en": "[Host Shell] Execute command on Android HOST (NOT in container!). ❌ Use exec_code for container commands." }, "parameters": [ { "name": "command", "type": "string", "required": true, "description": "命令" }, { "name": "timeout_ms", "type": "string", "required": false, "description": "超时毫秒（默认15000）" } ] },
+        { "name": "ping", "description": { "zh": "【连通测试】测试工具能否返回值给 UI。⚡纯测试不操作容器。", "en": "[Ping Test] Test if tool returns value to UI. ⚡Pure test." }, "parameters": [] },
+        { "name": "status", "description": { "zh": "【安装状态】获取 droidspaces 安装状态与容器列表。⚡只读查询。", "en": "[Install Status] Get installation status and container list. ⚡Read-only." }, "parameters": [ { "name": "timeout_ms", "type": "string", "required": false, "description": "超时毫秒（默认10000）" } ] },
+        { "name": "open_dashboard", "description": { "zh": "【仪表盘】打开容器管理器仪表盘 UI。⚡只打开界面不做后台操作。", "en": "[Dashboard] Open container manager dashboard UI. ⚡UI only." }, "parameters": [] },
+        { "name": "close", "description": { "zh": "【关闭终端】关闭交互式终端会话，清理 tmux 和临时文件。⚡只清理不执行命令。", "en": "[Close Terminal] Close terminal session, cleanup tmux & temp files. ⚡Cleanup only." }, "parameters": [ { "name": "session_id", "type": "string", "required": true, "description": "会话 ID" } ] },
+        { "name": "exec_code", "description": { "zh": "【复杂代码执行】在容器中执行大段/复杂代码脚本。⚡自带功能：自动推送 ct_socket_transfer.py（TCP 自收发用），自动安装 python3（容器内缺时自动装）。容量上限 60000 字节（超时阻断）。❌简单命令和大段代码同一条路径。", "en": "[Complex Code Execution] Execute large/complex code in container. ⚡Built-in: auto-pushes ct_socket_transfer.py, auto-installs python3 if missing. Capacity: 60000 bytes max. ❌ Unified path for both simple commands and large code." }, "parameters": [ { "name": "name", "type": "string", "required": true, "description": "容器名称" }, { "name": "code", "type": "string", "required": true, "description": "要执行的代码/脚本内容" }, { "name": "interpreter", "type": "string", "required": false, "description": "解释器，默认 sh。可选 python3/perl/bash 等" }, { "name": "timeout_ms", "type": "string", "required": false, "description": "超时毫秒（默认60000）" } ] }
     ]
 }
-*/
+ */
 var DROIDSPACES_BIN = "/data/local/Droidspaces/bin/droidspaces";
+var CT_BIN = "/data/adb/modules/ct_intercept/system/bin/ct";
 var TRANSFER_SCRIPT_HOST = "/data/adb/modules/ct_intercept/system/bin/ct_socket_transfer.py";
 var TRANSFER_SCRIPT_CONT = "/usr/local/bin/ct_socket_transfer.py";
 async function runDroidspaces(args, timeoutMs) {
@@ -77,9 +76,43 @@ async function runDroidspaces(args, timeoutMs) {
     }
 }
 async function runShell(cmd, timeoutMs) {
-    var result = await Tools.System.shell(cmd);
-    var output = typeof result === 'string' ? result : (result && result.output ? result.output : String(result));
-    return { success: true, command: cmd, output: output, exit_code: result && result.exitCode ? result.exitCode : 0 };
+    // Block write access to raw block devices — protect system partitions
+    var c = String(cmd);
+    if (/of=\/dev\/block\//.test(c)) {
+        return { success: true, command: cmd, output: "Blocked: writing to /dev/block/ devices is not allowed. Use exec_code or container tools for file operations.\\n已拦截：不允许写入 /dev/block/ 设备。文件操作请使用 exec_code 或容器内工具。", exit_code: -2, blocked: true };
+    }
+    try {
+        var result = await Tools.System.shell(cmd);
+        return normalizeShellResult(cmd, result);
+    } catch (e) {
+        // #6 修复：exit_code!=0 不是平台级失败，返回正常输出与退出码，避免误导 AI
+        var msg = e && e.message ? e.message : String(e);
+        var exitMatch = msg.match(/exit code:\s*(\d+)/i);
+        var exitCode = exitMatch ? parseInt(exitMatch[1]) : 1;
+        var output = msg.replace(/^ADB command execution failed \(exit code: \d+\):\s*/m, '');
+        return { success: true, command: cmd, output: output, exit_code: exitCode };
+    }
+}
+function normalizeShellResult(cmd, result) {
+    var output = "";
+    var exitCode = 0;
+    if (typeof result === 'string') {
+        output = result;
+    } else if (result && typeof result.output === 'string') {
+        output = result.output;
+        exitCode = result.exitCode || 0;
+    } else if (result && typeof result.stdout === 'string') {
+        output = result.stdout + (result.stderr ? "\n" + result.stderr : "");
+        exitCode = result.exitCode || 0;
+    } else if (result && (typeof result.message === 'string' || typeof result.error === 'string')) {
+        output = result.message || result.error;
+        exitCode = (result.success === false) ? (result.exitCode || 1) : 0;
+    } else if (result) {
+        try { output = JSON.stringify(result); } catch (e2) { output = String(result); }
+        if (result.exitCode) exitCode = result.exitCode;
+        if (result.success === false && !exitCode) exitCode = 1;
+    }
+    return { success: true, command: cmd, output: output, exit_code: exitCode };
 }
 async function ensureDroidspacesInstalled() {
     var chk = await Tools.System.shell("ls " + DROIDSPACES_BIN + " 2>/dev/null || echo 'NOT_FOUND'");
@@ -109,18 +142,24 @@ function wrap(asyncFn) {
 }
 var sessions = {};
 /**
- * ctExec — 在容器中执行命令。
- * 正确链路：su → ct exec → droidspaces run, 经过 base64 管道直通。
- * 完全跳过多层 shell 解析，任意复杂命令安全传递。
+ * ctExec — 在容器中执行命令/代码。
+ * 统一链路：su → ct exec_code @b64: → TCP socket 传码 → 容器内解码执行。
  */
-async function ctExec(container, cmd, timeoutMs) {
+async function ctExec(container, cmd, timeoutMs, interpreter) {
     var tmo = 0;
     if (timeoutMs !== undefined && timeoutMs !== null) {
         tmo = typeof timeoutMs === 'string' ? parseInt(timeoutMs, 10) : timeoutMs;
         if (isNaN(tmo) || tmo <= 0) tmo = 0;
     }
-    var b64 = base64Encode(String(cmd));
-    var fullCmd = "su -c 'ct " + container + " exec sh -c \"echo " + b64 + " | base64 -d | sh\" 2>&1; echo ___EXIT___:$?'";
+    var code = String(cmd);
+    if (code.length > 60000) {
+        return { success: true, output: "代码长度 " + code.length + " 字节超出单次传输上限 60000 字节。请分次执行或通过文件方式。", exit_code: -2 };
+    }
+    var interp = interpreter || "sh";
+    var b64 = base64Encode(code);
+    // 链路：su → ct exec → sh -c → echo 'B64' | base64 -d | sh
+    // base64 在单引号内，+、/、= 字面传递，不会被 shell 误解释
+    var fullCmd = "su -c \"" + CT_BIN + " " + container + " exec sh -c 'echo " + b64 + " | base64 -d | " + interp + "'\" 2>&1; echo ___EXIT___:$?";
     try {
         var result;
         if (tmo > 0) {
@@ -150,10 +189,10 @@ async function ctRaw(container, action, cmd) {
     var safeAction = String(action).replace(/'/g, "'\\''");
     var fullCmd;
     if (cmd !== undefined) {
-        var b64 = base64Encode(String(cmd));
-        fullCmd = "su -c 'ct " + container + " " + safeAction + " sh -c \"echo " + b64 + " | base64 -d | sh\" 2>&1; echo ___EXIT___:$?'";
+        var escapedCmd = String(cmd).replace(/'/g, "'\\''");
+        fullCmd = "su -c '" + CT_BIN + " " + container + " " + safeAction + " " + escapedCmd + "' 2>&1; echo ___EXIT___:$?";
     } else {
-        fullCmd = "su -c 'ct " + container + " " + safeAction + "' 2>&1; echo ___EXIT___:$?";
+        fullCmd = "su -c '" + CT_BIN + " " + container + " " + safeAction + "' 2>&1; echo ___EXIT___:$?";
     }
     try {
         var result = await Tools.System.shell(fullCmd);
@@ -200,6 +239,20 @@ function escapeForTmux(input) {
 function sleep(ms) { return new Promise(function(resolve) { setTimeout(resolve, ms); }); }
 
 /**
+ * diffNewLines — 增量 diff：去掉 prev 与 cur 的公共前缀行，返回新增内容。
+ * 修复 #2/#3：send 返回本次命令新增输出，read_screen 支持增量读取。
+ */
+function diffNewLines(prev, cur) {
+    if (!prev) return cur;
+    var p = prev.split('\n');
+    var c = cur.split('\n');
+    var i = 0;
+    while (i < p.length && i < c.length && p[i] === c[i]) i++;
+    return c.slice(i).join('\n');
+}
+var SCREEN_WINDOW = 200; // capture-pane 有界窗口行数，避免 backlog 无限膨胀
+
+/**
  * sendTool — 向交互式终端发送输入。
  *  tmux 模式：仅 tmux send-keys（单通道），capture-pane 返回输出。
  *  非 tmux 模式：ctExec + cwd 追踪；控制键仅在 tmux 下完全支持。
@@ -244,18 +297,24 @@ async function sendTool(params) {
             var screenContent = "";
             while (Date.now() - pollStart < pollTimeout) {
                 await sleep(150);
-                var capture = await ctExec(state.name, "tmux capture-pane -t ct_" + state.sid + " -p -S -9999 2>/dev/null", 5000);
+                var capture = await ctExec(state.name, "tmux capture-pane -t ct_" + state.sid + " -p -S -" + SCREEN_WINDOW + " 2>/dev/null", 5000);
                 screenContent = capture.output;
                 if (screenContent.indexOf(marker) !== -1) break;
             }
             if (!screenContent) {
-                var capture = await ctExec(state.name, "tmux capture-pane -t ct_" + state.sid + " -p -S -9999 2>/dev/null", 5000);
+                var capture = await ctExec(state.name, "tmux capture-pane -t ct_" + state.sid + " -p -S -" + SCREEN_WINDOW + " 2>/dev/null", 5000);
                 screenContent = capture.output;
             }
-            output = screenContent.split('\n').filter(function(line) { return line.indexOf(marker) === -1; }).join('\n').trim();
+            var filtered = screenContent.split('\n').filter(function(line) { return line.indexOf(marker) === -1; }).join('\n').trim();
+            var incremental = diffNewLines(state.prevCapture || "", filtered);
+            state.prevCapture = filtered;
+            output = incremental || filtered;
         } else {
-            var capture = await ctExec(state.name, "tmux capture-pane -t ct_" + state.sid + " -p -S -9999 2>/dev/null", 5000);
-            output = capture.output.trim();
+            var capture = await ctExec(state.name, "tmux capture-pane -t ct_" + state.sid + " -p -S -" + SCREEN_WINDOW + " 2>/dev/null", 5000);
+            var full = capture.output.trim();
+            var incremental = diffNewLines(state.prevCapture || "", full);
+            state.prevCapture = full;
+            output = incremental || full;
         }
         exitCode = 0;
         state.lastOutput = output;
@@ -295,13 +354,18 @@ async function readScreenTool(params) {
     if (!params.session_id) return { success: true, message: "session_id 是必填项", skipped: true };
     var state = sessions[params.session_id];
     if (!state) return { success: true, message: "会话 '" + params.session_id + "' 不存在，请先 enter", skipped: true };
+    var incrementalOnly = params.offset === true || String(params.offset) === "true";
     if (state.hasTmux) {
-        var capture = await ctExec(state.name, "tmux capture-pane -t ct_" + state.sid + " -p -S -9999 2>/dev/null");
-        state.lastOutput = capture.output;
-        return { success: true, session_id: state.sid, container: state.name, screen: capture.output, has_tmux: true };
+        var capture = await ctExec(state.name, "tmux capture-pane -t ct_" + state.sid + " -p -S -" + SCREEN_WINDOW + " 2>/dev/null");
+        // 过滤 marker 行，与 sendTool 的 prevCapture 基准保持一致
+        var full = capture.output.split('\n').filter(function(line) { return line.indexOf("__DS_DONE__") === -1; }).join('\n');
+        var incremental = diffNewLines(state.prevCapture || "", full);
+        state.prevCapture = full;
+        state.lastOutput = full;
+        return { success: true, session_id: state.sid, container: state.name, screen: incrementalOnly ? incremental : full, incremental: incremental, window_lines: SCREEN_WINDOW, has_tmux: true };
     } else {
         var cwdResult = await ctExec(state.name, "echo '=== CWD ==='; cat /tmp/.ct_session_" + state.sid + "/cwd 2>/dev/null || echo '(unknown)'; echo '=== LAST OUTPUT ==='; echo '" + String(state.lastOutput || "(no output yet)").replace(/'/g, "'\\''") + "'", 10000);
-        return { success: true, session_id: state.sid, container: state.name, screen: cwdResult.output, has_tmux: false };
+        return { success: true, session_id: state.sid, container: state.name, screen: cwdResult.output, incremental: "", has_tmux: false };
     }
 }
 
@@ -325,57 +389,22 @@ async function isContainerRunning(name) {
     var r = await runDroidspaces("show");
     return r.output.indexOf(name) !== -1;
 }
-async function execTool(params) {
-    if (!params.name || !params.command) return { success: true, message: "name 和 command 是必填项", skipped: true };
-    var result = await ctExec(params.name, params.command, params.timeout_ms || 30000);
-    return { success: result.success, container: params.name, command: params.command, output: result.output || "", exit_code: result.exit_code };
-}
 /**
  * execCodeTool — 在容器中执行大段/复杂代码脚本。
  * 链路：JS base64 → @b64: 直通 → su → ct exec_code → TCP 握手传码 → 解码写入 → 执行
  * interpreter 参数透传，内部 sh/bash/dash fallback 链。
  * 自动清理临时文件。
  *
- * 容量限制：单次传输上限约 60000 字节（源码长度）。
+ * ⚠ 容量限制：单次传输上限约 60000 字节（源码长度）。
  *   这是因为整个命令通过 execve（128KB 上限）传递，base64 编码膨胀 ~33%。
  *   超过 60000 字节时工具会提前阻断返回错误，请改用其他方式（如宿主写文件后 stdin 重定向）。
  */
 async function execCodeTool(params) {
     if (!params.name) return { success: true, message: "容器名称 (name) 是必填项", skipped: true };
     if (!params.code) return { success: true, message: "代码内容 (code) 是必填项", skipped: true };
-    var code = String(params.code);
     var interp = (params.interpreter || "").trim();
-    var tmo = params.timeout_ms || 120000;
-
-    // 自动推送 transfer 脚本（非关键，失败不影响主流程）
-    await ensureTransferWithPython(params.name);
-    
-    // 容量限制：超 60000 字节时提前阻断，避免被 execve 静默截断
-    if (code.length > 60000) {
-        return { success: true, container: params.name, code_length: code.length,
-            interpreter: interp || "sh",
-            output: "代码长度 " + code.length + " 字节超出单次传输上限 60000 字节。"
-                + "请将代码保存到宿主文件后通过 stdin 重定向执行（使用 exec/enter 工具）。",
-            exit_code: -2 };
-    }
-
-    // 方案：@b64: 直通，跳过中间编解码
-    // ct exec_code 识别 @b64: 前缀后直接 TCP 传码，不做二次编码
-    var b64 = base64Encode(code);
-    var interpArg = interp ? " " + interp : "";
-    var fullCmd = "su -c '/data/adb/modules/ct_intercept/system/bin/ct "
-        + params.name + " exec_code @b64:" + b64 + interpArg + "' 2>&1; echo ___EXIT___:$?";
-    try {
-        var result = await Tools.System.shell(fullCmd);
-        var output = typeof result === 'string' ? result : (result && result.output ? result.output : String(result));
-        var exitMatch = output.match(/___EXIT___:(\d+)$/m);
-        var exitCode = exitMatch ? parseInt(exitMatch[1]) : 0;
-        var cleanOutput = output.replace(/\n?___EXIT___:\d+$/m, '').trimEnd();
-        return { success: true, container: params.name, code_length: code.length, interpreter: interp || "sh", output: cleanOutput, exit_code: exitCode };
-    } catch (e) {
-        var msg = e && e.message ? e.message : String(e);
-        return { success: false, container: params.name, code_length: code.length, interpreter: interp || "sh", output: msg, exit_code: 1 };
-    }
+    var result = await ctExec(params.name, params.code, params.timeout_ms || 120000, interp || "sh");
+    return { success: result.success, container: params.name, code_length: String(params.code).length, interpreter: interp || "sh", output: result.output || "", exit_code: result.exit_code };
 }
 
 /** base64 编码（保留供其他函数使用） */
@@ -402,8 +431,7 @@ function base64Encode(str) {
             var c2 = ((b1 & 0xf) << 2);
             if (b2 >= 0) {
                 c2 |= b2 >>> 6;
-                var c3 = b2 & 0x3f;
-                b64 += b64chars.charAt(c2) + b64chars.charAt(c3);
+                b64 += b64chars.charAt(c2) + b64chars.charAt(b2 & 0x3f);
             } else {
                 b64 += b64chars.charAt(c2) + "=";
             }
@@ -413,38 +441,42 @@ function base64Encode(str) {
     }
     return b64;
 }
-async function listTool(_params) {
+async function startTool(params) {
+    if (!params.name) return { success: true, message: "name 是必填项", skipped: true };
     if (!(await isDroidspacesInstalled())) return { success: true, message: "droidspaces 未安装", skipped: true };
-    return await runDroidspaces("list");
+    var args = "--name=" + params.name + " ";
+    if (params.conf) args += "--conf=" + params.conf + " ";
+    else {
+        if (params.rootfs) args += "--rootfs=" + params.rootfs + " ";
+        if (params.rootfs_img) args += "--rootfs-img=" + params.rootfs_img + " ";
+        if (params.hostname) args += "--hostname=" + params.hostname + " ";
+        if (params.net) args += "--net=" + params.net + " ";
+        if (params.volatile) args += "--volatile ";
+        if (params.bind_mounts) args += "--bind-mount=" + params.bind_mounts + " ";
+        if (params.port) args += "--port=" + params.port + " ";
+        if (params.extra_args) args += params.extra_args + " ";
+    }
+    args += "start";
+    return await runDroidspaces(args);
 }
-async function infoTool(params) {
-    if (!params.name) return { success: true, message: "容器名称 (name) 是必填项", skipped: true };
+async function stopTool(params) {
+    if (!params.names) return { success: true, message: "names 是必填项", skipped: true };
+    if (!(await isDroidspacesInstalled())) return { success: true, message: "droidspaces 未安装", skipped: true };
+    return await runDroidspaces("--name=" + params.names + " stop");
+}
+async function restartTool(params) {
+    if (!params.name) return { success: true, message: "name 是必填项", skipped: true };
+    if (!(await isDroidspacesInstalled())) return { success: true, message: "droidspaces 未安装", skipped: true };
+    return await runDroidspaces("--name=" + params.name + " restart");
+}
+async function listTool(_params) {
     if (!(await isDroidspacesInstalled())) return { success: true, message: "droidspaces 未安装", skipped: true };
     return await runDroidspaces("show");
 }
-async function startTool(params) {
-    if (!params.name) return { success: true, message: "容器名称 (name) 是必填项", skipped: true };
-    var cmd = "start --name " + params.name;
-    if (params.rootfs) cmd += " --rootfs=" + params.rootfs;
-    if (params.rootfs_img) cmd += " --rootfs-img=" + params.rootfs_img;
-    if (params.hostname) cmd += " --hostname=" + params.hostname;
-    if (params.conf) cmd += " --conf=" + params.conf;
-    if (params.net) cmd += " --net=" + params.net;
-    if (params.volatile !== undefined) cmd += params.volatile ? " --volatile" : "";
-    if (params.bind_mounts) cmd += " --bind=" + params.bind_mounts;
-    if (params.port) cmd += " -p " + params.port;
-    if (params.extra_args) cmd += " " + params.extra_args;
-    return await runDroidspaces(cmd);
-}
-async function stopTool(params) {
-    if (!params.names) return { success: true, message: "names 是必填项（逗号分隔的容器名）", skipped: true };
-    var names = params.names.split(',').map(function(n) { return n.trim(); }).filter(function(n) { return n.length > 0; }).join(' ');
-    if (!names) return { success: true, message: "未指定有效容器名", skipped: true };
-    return await runDroidspaces("stop --name " + names);
-}
-async function restartTool(params) {
-    if (!params.name) return { success: true, message: "容器名称 (name) 是必填项", skipped: true };
-    return await runDroidspaces("restart --name " + params.name);
+async function infoTool(params) {
+    if (!params.name) return { success: true, message: "name 是必填项", skipped: true };
+    if (!(await isDroidspacesInstalled())) return { success: true, message: "droidspaces 未安装", skipped: true };
+    return await runDroidspaces("--name=" + params.name + " info");
 }
 async function scanTool(_params) {
     if (!(await isDroidspacesInstalled())) return { success: true, message: "droidspaces 未安装", skipped: true };
@@ -464,7 +496,7 @@ async function openDashboardTool() {
     catch(e) { return { success: true, message: "打开仪表盘失败: " + (e && e.message ? e.message : e), skipped: true }; }
 }
 var Droidspaces = {
-    enter: wrap(enterTool), send: wrap(sendTool), read_screen: wrap(readScreenTool), exec: wrap(execTool),
+    enter: wrap(enterTool), send: wrap(sendTool), read_screen: wrap(readScreenTool),
     exec_code: wrap(execCodeTool),
     start: wrap(startTool), stop: wrap(stopTool), restart: wrap(restartTool), list: wrap(listTool),
     info: wrap(infoTool), scan: wrap(scanTool), check: wrap(checkTool), shell: wrap(shellTool),
@@ -474,7 +506,6 @@ var Droidspaces = {
 exports.enter = Droidspaces.enter;
 exports.send = Droidspaces.send;
 exports.read_screen = Droidspaces.read_screen;
-exports.exec = Droidspaces.exec;
 exports.exec_code = Droidspaces.exec_code;
 exports.start = Droidspaces.start;
 exports.stop = Droidspaces.stop;
@@ -488,6 +519,7 @@ exports.status = Droidspaces.status;
 exports.ping = Droidspaces.ping;
 exports.open_dashboard = Droidspaces.open_dashboard;
 exports.close = Droidspaces.close;
+/**
 
 /**
  * ensureTransferWithPython — 自动推送 ct_socket_transfer.py + 自动安装 python3。
